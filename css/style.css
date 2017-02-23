@@ -67,6 +67,7 @@ html, body{
   padding: 0px;
 }
   .timerDiv{
+    position: relative;
     background-color: #87898B;
     height: 100%;
     align-items: center;
@@ -87,4 +88,8 @@ html, body{
   .chronobtn{
     font-size: 7em;
     margin-top: 20px;
+  }
+  div #CountDownTimer{
+  margin: 0 auto;
+
   }

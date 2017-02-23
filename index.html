@@ -16,6 +16,9 @@
 
    <!--custom css-->
     <link rel="stylesheet" type="text/css" href="css/style.css">
+       <link rel="stylesheet" href="css/TimeCircles.css" />
+
+
 </head>
 
 <body>
@@ -39,18 +42,12 @@
         </div>
     </div>
     <div class="row detailView container-fluid">
-      <div class="col-xs-4 timerDiv">
-        <span class="glyphicon glyphicon-play chronobtn" id="chronobtn"></span>
+      <div class="col-xs-2 timerDiv">
       </div>
-      <div class="col-xs-4 timerDiv">
-        <div id="timerFito" class="timer">
-
-        </div>
+      <div class="col-xs-8 timerDiv">
+          <div class="paused" id="CountDownTimer" data-timer="15" style="width: 80%; height: 70%;"></div>
       </div>
-      <div class="col-xs-4 timerDiv">
-        <div class="timerseg">
-          seg.
-        </div>
+      <div class="col-xs-2 timerDiv">
       </div>
     </div>
 
@@ -61,8 +58,40 @@
 
    <!-- Bootstrap Core JavaScript -->
    <script src="js/bootstrap.min.js"></script>
+   <script type="text/javascript" src="js/TimeCircles.js"></script>
 
-   <script type="text/javascript" src="js/chrono.js"></script>
+   <script>
+      $("#CountDownTimer").TimeCircles({ time: { Days: { show: false }, Hours: { show: false }, Minutes:{show: false} } ,start: false, count_past_zero: false} ).addListener(countdownComplete);
+
+      $("#CountDownTimer").click(function() {
+        if ($("#CountDownTimer").hasClass('paused')) {
+          $("#CountDownTimer").removeClass('paused');
+          $("#CountDownTimer").addClass('started');
+          $("#CountDownTimer").TimeCircles({timer:{Minutes:{color:'#F9CF00'}}}).start();
+        }
+        else if ($("#CountDownTimer").hasClass('started')) {
+          $("#CountDownTimer").removeClass('started');
+          $("#CountDownTimer").addClass('paused');
+          $("#CountDownTimer").TimeCircles({timer:{Minutes:{color:'#BE2F32'}}}).stop();
+        }
+        else if($("#CountDownTimer").hasClass('stopped')){
+          $("#CountDownTimer").removeClass('stopped');
+          $("#CountDownTimer").addClass('started');
+          $("#CountDownTimer").TimeCircles().restart();
+        }
+
+      });
+
+      function countdownComplete(unit, value, total){
+        if (total<=0) {
+            $("#CountDownTimer").removeClass('started');
+            $("#CountDownTimer").addClass('stopped');
+        }
+      }
+
+   </script>
+   <!--<script type="text/javascript" src="js/chrono.js"></script>-->
+
 </body>
 
 </html>
